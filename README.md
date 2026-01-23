@@ -1,9 +1,9 @@
 # certifiable-monitor
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/williamofai/certifiable-monitor)
-[![Tests](https://img.shields.io/badge/tests-253%20passing-brightgreen)](https://github.com/williamofai/certifiable-monitor)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/SpeyTech/certifiable-monitor)
+[![Tests](https://img.shields.io/badge/tests-253%20passing-brightgreen)](https://github.com/SpeyTech/certifiable-monitor)
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue)](LICENSE)
-[![Platform](https://img.shields.io/badge/platform-x86%20%7C%20ARM%20%7C%20RISC--V-lightgrey)](https://github.com/williamofai/certifiable-monitor)
+[![Platform](https://img.shields.io/badge/platform-x86%20%7C%20ARM%20%7C%20RISC--V-lightgrey)](https://github.com/SpeyTech/certifiable-monitor)
 
 **Deterministic runtime monitoring for safety-critical ML inference.**
 
@@ -309,11 +309,11 @@ typedef struct {
 
 | Project | Description |
 |---------|-------------|
-| [certifiable-data](https://github.com/williamofai/certifiable-data) | Deterministic data pipeline |
-| [certifiable-training](https://github.com/williamofai/certifiable-training) | Deterministic training engine |
-| [certifiable-quant](https://github.com/williamofai/certifiable-quant) | Deterministic quantization |
-| [certifiable-deploy](https://github.com/williamofai/certifiable-deploy) | Deterministic model packaging |
-| [certifiable-inference](https://github.com/williamofai/certifiable-inference) | Deterministic inference engine |
+| [certifiable-data](https://github.com/SpeyTech/certifiable-data) | Deterministic data pipeline |
+| [certifiable-training](https://github.com/SpeyTech/certifiable-training) | Deterministic training engine |
+| [certifiable-quant](https://github.com/SpeyTech/certifiable-quant) | Deterministic quantization |
+| [certifiable-deploy](https://github.com/SpeyTech/certifiable-deploy) | Deterministic model packaging |
+| [certifiable-inference](https://github.com/SpeyTech/certifiable-inference) | Deterministic inference engine |
 
 Together, these projects provide a complete deterministic ML pipeline for safety-critical systems:
 ```
