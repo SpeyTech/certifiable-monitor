@@ -1,8 +1,47 @@
-# Build
-build/
+.bdep/
+
+# Local default options files.
+#
+.build2/local/
+
+# Compiler/linker output.
+#
+*.d
+*.t
+*.i
+*.i.*
+*.ii
+*.ii.*
 *.o
-*.a
+*.obj
+*.gcm
+*.pcm
+*.ifc
 *.so
+*.dylib
+*.dll
+*.a
+*.lib
+*.exp
+*.pdb
+*.ilk
+*.exe
+*.exe.dlls/
+*.exe.manifest
+*.pc
+
+# Build2 symlinks exes from build dir to src dir for convenient
+tests/unit/test_activation
+tests/unit/test_bit_identity
+tests/unit/test_detectors
+tests/unit/test_health
+tests/unit/test_input
+tests/unit/test_ledger
+tests/unit/test_output
+tests/unit/test_policy
+tests/unit/test_primitives
+tests/unit/test_react
+tests/unit/test_verify
 
 # IDE
 .vscode/
