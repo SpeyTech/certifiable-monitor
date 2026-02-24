@@ -17,6 +17,7 @@
  */
 
 #include "ct_types.h"
+#include <assert.h>
 #include <stdint.h>
 #include <stddef.h>
 #include <string.h>
@@ -177,6 +178,7 @@ void cm_sha256_update(cm_sha256_ctx_t *ctx, const uint8_t *data, size_t len)
     if (buf_fill > 0) {
         size_t to_copy = 64 - buf_fill;
         if (to_copy > len) to_copy = len;
+        assert(data != NULL);  /* GCC 15 -fanalyzer interprocedural false positive */
         memcpy(ctx->buffer + buf_fill, data, to_copy);
         data += to_copy;
         len -= to_copy;
@@ -212,7 +214,7 @@ void cm_sha256_final(cm_sha256_ctx_t *ctx, uint8_t *digest)
     if (!ctx || !digest) return;
     
     size_t buf_fill = (size_t)(ctx->count / 8) % 64;
-    uint8_t pad[64];
+    uint8_t pad[64] = {0};
     
     /* Padding: 1 bit followed by zeros */
     memset(pad, 0, sizeof(pad));
