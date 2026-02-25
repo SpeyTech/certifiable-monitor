@@ -103,10 +103,20 @@ static void sha256_transform(cm_sha256_ctx_t *ctx, const uint8_t *block)
                ((uint32_t)block[i * 4 + 2] <<  8) |
                ((uint32_t)block[i * 4 + 3]);
     }
+
+#if defined(__GNUC__) && !defined(__clang__) && (__GNUC__ >= 13)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wanalyzer-use-of-uninitialized-value"
+#endif
+
     for (int i = 16; i < 64; i++) {
         W[i] = SIG1(W[i-2]) + W[i-7] + SIG0(W[i-15]) + W[i-16];
     }
-    
+
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic pop
+#endif
+
     /* Initialize working variables */
     a = ctx->state[0];
     b = ctx->state[1];
