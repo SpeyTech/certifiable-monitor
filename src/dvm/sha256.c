@@ -166,7 +166,7 @@ void cm_sha256_init(cm_sha256_ctx_t *ctx)
  * their buffers completely via write_u32_le / write_u64_le / write_i32_le
  * before calling this function.  See CT-MATH-001 §16 for the proof that
  * the header layout is fully covered. */
-#if defined(__GNUC__) && !defined(__clang__)
+#if defined(__GNUC__) && !defined(__clang__) && (__GNUC__ >= 13)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wanalyzer-use-of-uninitialized-value"
 #endif
