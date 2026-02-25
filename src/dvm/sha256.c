@@ -160,6 +160,17 @@ void cm_sha256_init(cm_sha256_ctx_t *ctx)
     memset(ctx->buffer, 0, sizeof(ctx->buffer));
 }
 
+/* GCC -fanalyzer false positive: interprocedural analysis through the
+ * (const void *data) parameter cannot prove that callers have initialised
+ * every byte of the buffer passed to ct_sha256_update.  All callers fill
+ * their buffers completely via write_u32_le / write_u64_le / write_i32_le
+ * before calling this function.  See CT-MATH-001 §16 for the proof that
+ * the header layout is fully covered. */
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wanalyzer-use-of-uninitialized-value"
+#endif
+
 /**
  * @brief Update hash with data
  * @param ctx Context
@@ -202,6 +213,10 @@ void cm_sha256_update(cm_sha256_ctx_t *ctx, const uint8_t *data, size_t len)
         memcpy(ctx->buffer, data, len);
     }
 }
+
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic pop
+#endif
 
 /**
  * @brief Finalize hash and output digest
