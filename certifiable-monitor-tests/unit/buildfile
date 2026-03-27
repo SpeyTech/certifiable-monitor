@@ -1,0 +1,36 @@
+import cm = certifiable-monitor%liba{certifiable-monitor}
+
+tests = exe{ \
+  certifiable_monitor_test_activation \
+  certifiable_monitor_test_bit_identity \
+  certifiable_monitor_test_detectors \
+  certifiable_monitor_test_health \
+  certifiable_monitor_test_input \
+  certifiable_monitor_test_ledger \
+  certifiable_monitor_test_output \
+  certifiable_monitor_test_policy \
+  certifiable_monitor_test_primitives \
+  certifiable_monitor_test_react \
+  certifiable_monitor_test_verify \
+  }
+
+exe{certifiable_monitor_test_activation}: c{test_activation} $cm
+exe{certifiable_monitor_test_bit_identity}: c{test_bit_identity} $cm
+exe{certifiable_monitor_test_detectors}: c{test_detectors} $cm
+exe{certifiable_monitor_test_health}: c{test_health} $cm
+exe{certifiable_monitor_test_input}: c{test_input} $cm
+exe{certifiable_monitor_test_ledger}: c{test_ledger} $cm
+exe{certifiable_monitor_test_output}: c{test_output} $cm
+exe{certifiable_monitor_test_policy}: c{test_policy} $cm
+exe{certifiable_monitor_test_primitives}: c{test_primitives} $cm
+exe{certifiable_monitor_test_react}: c{test_react} $cm
+exe{certifiable_monitor_test_verify}: c{test_verify} $cm
+
+$tests:
+{
+  c.coptions += -UNDEBUG
+  c.libs += -lm
+  test = true
+}
+
+./: $tests
