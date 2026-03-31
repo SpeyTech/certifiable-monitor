@@ -1,0 +1,62 @@
+# Build artifacts
+/build-*/
+/build_*/
+/build/bootstrap/
+.bdep/
+.bpkg/
+
+# Local default options files.
+#
+.build2/local/
+
+# Compiler/linker output.
+#
+*.d
+*.t
+*.i
+*.i.*
+*.ii
+*.ii.*
+*.o
+*.obj
+*.gcm
+*.pcm
+*.ifc
+*.so
+*.dylib
+*.dll
+*.a
+*.lib
+*.exp
+*.pdb
+*.ilk
+*.exe
+*.exe.dlls/
+*.exe.manifest
+*.pc
+
+# Test executables.
+#
+driver
+
+# Testscript output directories (can be symlinks).
+#
+test
+test-*
+
+# Test artifacts
+Testing/
+*.log
+
+# Build2 symlinks exes from build dir to src dir for convenient
+/unit/certifiable_monitor_test_activation
+/unit/certifiable_monitor_test_bit_identity
+/unit/certifiable_monitor_test_detectors
+/unit/certifiable_monitor_test_health
+/unit/certifiable_monitor_test_input
+/unit/certifiable_monitor_test_ledger
+/unit/certifiable_monitor_test_output
+/unit/certifiable_monitor_test_policy
+/unit/certifiable_monitor_test_primitives
+/unit/certifiable_monitor_test_react
+/unit/certifiable_monitor_test_verify

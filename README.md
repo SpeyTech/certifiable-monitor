@@ -69,11 +69,40 @@ JSON-defined Certified Operational Envelope (COE) maps violations to actions: LO
 ## Quick Start
 
 ### Build
+
+All project tasks are available as Makefile targets, and GitHub Actions CI uses
+these to ensure that they are not stale. Documentation of the commands are
+available via `make help`.
+
+When building the project for the first time, run `make deps`.
+
+To building everything (i.e. config, build, test), run `make`. Otherwise, use
+individual Makefile targets as desired.
+
 ```bash
-mkdir build && cd build
-cmake ..
-make
-make test-all  # Run all 11 test suites (253 tests)
+$ make help
+Makefile Usage:
+  make <target>
+
+Dependencies
+  deps             Install project dependencies
+
+Development
+  config           Configure the build
+  build            Build the project
+
+Testing
+  test             Run tests
+
+Project Management
+  install          Install the project
+  release          Build release artifacts
+
+Maintenance
+  clean            Remove all build artifacts
+
+Documentation
+  help             Display this help
 ```
 
 ### Expected Output

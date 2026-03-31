@@ -34,14 +34,3 @@
 *.exe.dlls/
 *.exe.manifest
 *.pc
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS
-.DS_Store
-Thumbs.db

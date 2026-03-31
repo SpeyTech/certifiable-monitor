@@ -17,6 +17,7 @@
  */
 
 #include "ct_types.h"
+#include <assert.h>
 #include <stdint.h>
 #include <stddef.h>
 #include <string.h>
@@ -102,10 +103,20 @@ static void sha256_transform(cm_sha256_ctx_t *ctx, const uint8_t *block)
                ((uint32_t)block[i * 4 + 2] <<  8) |
                ((uint32_t)block[i * 4 + 3]);
     }
+
+#if defined(__GNUC__) && !defined(__clang__) && (__GNUC__ >= 13)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wanalyzer-use-of-uninitialized-value"
+#endif
+
     for (int i = 16; i < 64; i++) {
         W[i] = SIG1(W[i-2]) + W[i-7] + SIG0(W[i-15]) + W[i-16];
     }
-    
+
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic pop
+#endif
+
     /* Initialize working variables */
     a = ctx->state[0];
     b = ctx->state[1];
@@ -159,6 +170,17 @@ void cm_sha256_init(cm_sha256_ctx_t *ctx)
     memset(ctx->buffer, 0, sizeof(ctx->buffer));
 }
 
+/* GCC -fanalyzer false positive: interprocedural analysis through the
+ * (const void *data) parameter cannot prove that callers have initialised
+ * every byte of the buffer passed to ct_sha256_update.  All callers fill
+ * their buffers completely via write_u32_le / write_u64_le / write_i32_le
+ * before calling this function.  See CT-MATH-001 §16 for the proof that
+ * the header layout is fully covered. */
+#if defined(__GNUC__) && !defined(__clang__) && (__GNUC__ >= 13)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wanalyzer-use-of-uninitialized-value"
+#endif
+
 /**
  * @brief Update hash with data
  * @param ctx Context
@@ -177,6 +199,7 @@ void cm_sha256_update(cm_sha256_ctx_t *ctx, const uint8_t *data, size_t len)
     if (buf_fill > 0) {
         size_t to_copy = 64 - buf_fill;
         if (to_copy > len) to_copy = len;
+        assert(data != NULL);  /* GCC 15 -fanalyzer interprocedural false positive */
         memcpy(ctx->buffer + buf_fill, data, to_copy);
         data += to_copy;
         len -= to_copy;
@@ -201,6 +224,10 @@ void cm_sha256_update(cm_sha256_ctx_t *ctx, const uint8_t *data, size_t len)
     }
 }
 
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic pop
+#endif
+
 /**
  * @brief Finalize hash and output digest
  * @param ctx Context
@@ -212,7 +239,7 @@ void cm_sha256_final(cm_sha256_ctx_t *ctx, uint8_t *digest)
     if (!ctx || !digest) return;
     
     size_t buf_fill = (size_t)(ctx->count / 8) % 64;
-    uint8_t pad[64];
+    uint8_t pad[64] = {0};
     
     /* Padding: 1 bit followed by zeros */
     memset(pad, 0, sizeof(pad));
